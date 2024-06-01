@@ -1,17 +1,19 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:e_commerce_flutter/screen/home_screen.dart';
-import 'dart:ui' show PointerDeviceKind;
+import 'package:get/get.dart'; // Import Get package
 import 'core/app_theme.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,
@@ -25,30 +27,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _navigateToHome();
-  }
-
-  _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 3), () {});
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
-    );
-  }
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    // Use GetX's delayed redirection
+    Future.delayed(const Duration(seconds: 3), () {
+      // Use Get.off instead of Navigator.pushReplacement
+      Get.off(() => const HomeScreen());
+    });
+
     return const Scaffold(
       backgroundColor: Colors.blue,
       body: Center(

@@ -1,7 +1,8 @@
-// view/all_product_list.dart
-
+// all_product_list.dart
+import 'package:e_commerce_flutter/screen/product_details_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../binding/product_details_binding.dart';
 import '../controller/product_controller.dart';
 import '../core/app_color.dart';
 import '../core/skeleton_screen.dart';
@@ -37,7 +38,7 @@ class _AllProductListState extends State<AllProductList> {
             children: [
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("Jobs Found"),
+                child: Text("Products Found"),
               ),
               Expanded(
                 child: ListView.builder(
@@ -47,7 +48,13 @@ class _AllProductListState extends State<AllProductList> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(
+                                () => ProductDetailsScreen(),
+                            arguments: controller.lstProduct[index].id,
+                            binding: ProductDetailsBinding(),
+                          );
+                        },
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),

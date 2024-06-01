@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:get/get_connect/connect.dart';
+import '../model/product_details_model.dart';
 import '../model/product_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,4 +29,18 @@ class ApiService extends GetConnect {
       return Future.error(exception.toString());
     }
   }
+
+  Future<ProductDetailsModel> getProductDetails(int id) async {
+    try {
+      final response = await http.get(Uri.parse("https://fakestoreapi.com/products/$id")).timeout(const Duration(seconds: 60));
+      if (response.statusCode != 200) {
+        return Future.error('something wrong');
+      } else {
+        return ProductDetailsModel.fromJson(jsonDecode(response.body));
+      }
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
+
 }
